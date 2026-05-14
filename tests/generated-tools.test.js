@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
+import { mkdir, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
-import { callGeneratedTool } from "../src/generated-tools.js";
+import { callGeneratedTool, loadGeneratedTools } from "../src/generated-tools.js";
 
 test("generated tool fills path params and forwards query/body", async () => {
   const calls = [];
@@ -42,4 +45,20 @@ test("generated mutation tool requires confirmation", async () => {
       ),
     /confirmMutation/,
   );
+});
+
+test("loads generated tools relative to a supplied base directory", async () => {
+  const baseDir = join(tmpdir(), `cvat-mcp-${process.pid}`);
+  await mkdir(join(baseDir, "generated"), { recursive: true });
+  await writeFile(
+    join(baseDir, "generated", "cvat-tools.json"),
+    JSON.stringify({ tools: [{ name: "cvat_demo", description: "demo", inputSchema: {} }] }),
+  );
+
+  try {
+    const tools = await loadGeneratedTools("generated/cvat-tools.json", baseDir);
+    assert.equal(tools[0].name, "cvat_demo");
+  } finally {
+    await rm(baseDir, { recursive: true, force: true });
+  }
 });

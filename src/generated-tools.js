@@ -1,10 +1,15 @@
 import { readFile } from "node:fs/promises";
+import { isAbsolute, resolve } from "node:path";
 
 const HTTP_METHODS = new Set(["GET", "POST", "PATCH", "PUT", "DELETE"]);
 
-export async function loadGeneratedTools(catalogPath = process.env.CVAT_GENERATED_TOOLS_PATH) {
+export async function loadGeneratedTools(
+  catalogPath = process.env.CVAT_GENERATED_TOOLS_PATH,
+  baseDir = process.cwd(),
+) {
   if (!catalogPath) return [];
-  const raw = await readFile(catalogPath, "utf8");
+  const resolvedPath = isAbsolute(catalogPath) ? catalogPath : resolve(baseDir, catalogPath);
+  const raw = await readFile(resolvedPath, "utf8");
   const parsed = JSON.parse(raw);
   if (!Array.isArray(parsed.tools)) {
     throw new Error("Generated tool catalog must contain a tools array.");

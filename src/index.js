@@ -1,10 +1,13 @@
 #!/usr/bin/env node
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { CvatClient } from "./cvat-client.js";
 import { callGeneratedTool, loadGeneratedTools, toMcpGeneratedTool } from "./generated-tools.js";
 import { McpServer } from "./mcp-server.js";
 import { callStaticTool, staticTools } from "./static-tools.js";
 
-const generatedTools = await loadGeneratedTools();
+const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const generatedTools = await loadGeneratedTools(process.env.CVAT_GENERATED_TOOLS_PATH, projectRoot);
 const generatedByName = new Map(generatedTools.map((tool) => [tool.name, tool]));
 let client;
 
