@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "cvat-mcp": {
+      "command": "node",
+      "args": ["C:\\Users\\준승\\Desktop\\Development\\CVAT-MCP\\src\\index.js"],
+      "env": {
+        "CVAT_BASE_URL": "http://localhost:8080",
+        "CVAT_AUTH_TOKEN": "replace_with_personal_access_token",
+        "CVAT_AUTH_SCHEME": "Bearer"
+      },
+      "disabled": false,
+      "alwaysAllow": [
+        "cvat_server_about",
+        "cvat_list_tasks",
+        "cvat_get_task",
+        "cvat_list_projects",
+        "cvat_list_jobs"
+      ]
+    }
+  }
+}

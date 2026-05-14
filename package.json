@@ -1,0 +1,17 @@
+{
+  "name": "cvat-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for controlling CVAT through the official REST API.",
+  "type": "module",
+  "bin": {
+    "cvat-mcp": "src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node tests/run-tests.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT"
+}

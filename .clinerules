@@ -1,0 +1,5 @@
+When the user asks about CVAT tasks, projects, jobs, labels, annotations, uploads, exports, imports, or server status, use the `cvat-mcp` MCP server tools.
+
+Prefer high-level tools such as `cvat_list_tasks`, `cvat_get_task`, `cvat_create_task`, `cvat_attach_task_data`, `cvat_list_projects`, and `cvat_list_jobs` before using `cvat_api_request`.
+
+Use `cvat_api_request` only for official `/api/` CVAT endpoints that do not have a dedicated high-level tool. For non-GET requests, include `confirmMutation: true` only after the intended CVAT change is clear.
