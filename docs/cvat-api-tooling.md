@@ -21,6 +21,24 @@
    - `CVAT_GENERATED_TOOLS_PATH`를 설정하면 서버 시작 시 생성 Tool을 함께 노출한다.
    - CVAT upstream에 포함될 때는 이 생성 단계를 CI에서 검증해 API 변경을 추적한다.
 
+## 오프라인 및 버전 호환성
+
+인터넷 연결은 필수가 아니다. MCP 서버는 설정된 `CVAT_BASE_URL`의 CVAT REST API만 호출하며, OpenAPI 생성 스크립트도 입력받은 schema URL 또는 로컬 JSON 파일만 읽는다.
+
+내부망 또는 폐쇄망 CVAT 서버에서는 다음처럼 해당 서버의 schema를 직접 사용한다.
+
+```powershell
+node scripts/generate-tool-catalog.js http://내부_CVAT_주소/api/schema/ generated/cvat-tools.json
+```
+
+이미 받아 둔 schema 파일이 있으면 네트워크 없이도 생성할 수 있다.
+
+```powershell
+node scripts/generate-tool-catalog.js .\schema.json generated/cvat-tools.json
+```
+
+주의할 점은 인터넷 연결 여부가 아니라 CVAT 버전이다. CVAT Online, 로컬 CVAT, 회사 내부 CVAT의 버전이 다르면 OpenAPI schema가 다를 수 있고, 외부 서버 기준으로 생성한 Tool 일부가 내부 서버에서는 실패할 수 있다. 실사용 환경에서는 실제 사용할 CVAT 서버의 `/api/schema/`로 Tool 카탈로그를 생성한다.
+
 ## 인증
 
 기본 인증은 CVAT Personal Access Token이다.
