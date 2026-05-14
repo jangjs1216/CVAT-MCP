@@ -6,7 +6,8 @@
       "env": {
         "CVAT_BASE_URL": "http://localhost:8080",
         "CVAT_AUTH_TOKEN": "replace_with_personal_access_token",
-        "CVAT_AUTH_SCHEME": "Bearer"
+        "CVAT_AUTH_SCHEME": "Bearer",
+        "CVAT_GENERATED_TOOLS_PATH": "generated/cvat-tools.json"
       },
       "disabled": false,
       "alwaysAllow": [
